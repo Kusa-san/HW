@@ -1,3 +1,6 @@
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+#<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
 class employees_manager:
 #class prop
     employees=[]
@@ -273,8 +276,11 @@ class employees_manager:
         return updated_employees
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def all_employee_information(cls):
-        for employee in cls.employees:
-            print(employee)
+        if len(employees_manager.employees) == 0:
+            print("There are no employees in the database.")
+        else:
+            for employee in cls.employees:
+                print(employee)
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def __str__(self):
         return f"Employee: {self.first_name} {self.last_name} Department: {self.department} Salary: {self.salary}"
@@ -294,17 +300,85 @@ class accounts_manager:
     def __str__(self):
             return f"The name of the account holder is {self.account_holder_first_name} {self.account_holder_last_name} , amount is {self.amount} , and account number is {self.account_number}"
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
-    def deposit():
-        pass
+    @classmethod
+    def deposit(cls):
+        if len(cls.accounts) == 0:
+            return "There are no accounts in the database."
+        
+        else:
+            account = cls.find_account()
+            if isinstance(account,str):
+                return account
+            
+            else:
+                while True:
+                    try:
+                        deposit_amount = float(input("Enter the amount to deposit: "))
+                        if deposit_amount <= 0:
+                            print("Deposit amount must be greater than 0.")
+                        else:
+                            break
+                    except ValueError:
+                        print("Invalid amount. Please enter a valid number.")
+
+                print(f"Depositing ${deposit_amount} into account {account.account_number}.")
+                confirm = input("Confirm deposit? [yes/no]: ").upper()
+                if confirm == "YES" or confirm == "Y":
+
+                    account.amount += deposit_amount
+                    print("Deposit successful.")
+                    print(f"Updated account balance: ${account.amount}")
+                else:
+                    print("Deposit canceled.")
+
+                return
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
-    def wothdrow():
-        pass
+    @classmethod
+    def withdraw(cls):
+        if len(cls.accounts) == 0:
+            return "There are no accounts in the database."
+
+        else:
+            account = cls.find_account()
+            if isinstance(account,str):
+                return account
+            
+            else:
+                while True:
+                    try:
+                        withdraw_amount = float(input("Enter the amount to withdraw: "))
+                        if withdraw_amount <= 0:
+                            print("Withdrawal amount must be greater than 0.")
+                        elif withdraw_amount > account.amount:
+                            print("Insufficient funds in the account.")
+                        else:
+                            break
+                    except ValueError:
+                        print("Invalid amount. Please enter a valid number.")
+
+                print(f"Withdrawing ${withdraw_amount} from account {account.account_number}.")
+                confirm = input("Confirm withdrawal? [yes/no]: ").upper()
+                if confirm == "YES" or confirm == "Y":
+
+                    account.amount -= withdraw_amount
+                    print("Withdrawal successful.")
+                    print(f"Updated account balance: ${account.amount}")
+
+                else:
+                    print("Withdrawal canceled.")
+
+                return
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def transfer():
         pass
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
-    def account_information():
-        pass
+    @classmethod
+    def all_account_information(cls):
+        if len(accounts_manager.accounts) == 0:
+            print("There are no accounts in the database.")
+        else:
+            for account in cls.accounts:
+                print(account)
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     @classmethod
     def delete_account(cls):
@@ -441,4 +515,198 @@ class accounts_manager:
         amount = float(input("Enter the amount: "))
         accounts_manager(account_holder_first_name, account_holder_last_name, amount)
         print("The new account has been added to the database.")
+#<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
+    @classmethod
+    def update_account(cls):
+        if len(cls.accounts) == 0:
+            return "There are no accounts in the database."
+
+        updated_accounts = []
+        search_category = input("By what category do you want to search for the account to update?\n1. Account holder first name and last name\n2. Account number\n3. Amount\nEnter your choice (1 or 2 or 3): ")
+
+        if search_category == "1":
+            search_first_name = input("Please enter the first name of the account holder you want to update: ").upper()
+            search_last_name = input("Please enter the last name of the account holder you want to update: ").upper()
+
+            loop_counter = 0
+            while loop_counter < len(cls.accounts):
+                account = cls.accounts[loop_counter]
+                if account.account_holder_first_name == search_first_name and account.account_holder_last_name == search_last_name:
+                    print(account)
+                    answer = input("Is this the account you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
+                    if answer == "YES" or answer == "Y":
+                        print("Enter the new details for the account:")
+                        new_first_name = input("New first name: ").upper()
+                        new_last_name = input("New last name: ").upper()
+                        
+                        while True:
+                            try:
+                                new_amount = float(input("New amount: "))
+                                break
+                            except ValueError:
+                                print("Invalid amount input. Please enter a valid number.")
+                        
+                        account.account_holder_first_name = new_first_name
+                        account.account_holder_last_name = new_last_name
+                        account.amount = new_amount
+                        
+                        updated_accounts.append(account)
+                        print("The account has been updated.")
+                    elif answer == "NO" or answer == "N":
+                        print("The account has not been updated.")
+                        loop_counter += 1
+                    else:
+                        print("Invalid input. Please try again.")
+                else:
+                    loop_counter += 1
+
+        elif search_category == "2":
+            try:
+                search_account_number = int(input("Please enter the account number of the account you want to update: "))
+                
+                loop_counter = 0
+                while loop_counter < len(cls.accounts):
+                    account = cls.accounts[loop_counter]
+                    if account.account_number == search_account_number:
+                        print(account)
+                        answer = input("Is this the account you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
+                        if answer == "YES" or answer == "Y":
+                            print("Enter the new details for the account:")
+                            new_first_name = input("New first name: ").upper()
+                            new_last_name = input("New last name: ").upper()
+
+                            while True:
+                                try:
+                                    new_amount = float(input("New amount: "))
+                                    break
+                                except ValueError:
+                                    print("Invalid amount input. Please enter a valid number.")
+                            
+                            account.account_holder_first_name = new_first_name
+                            account.account_holder_last_name = new_last_name
+                            account.amount = new_amount
+                            
+                            updated_accounts.append(account)
+                            print("The account has been updated.")
+                        elif answer == "NO" or answer == "N":
+                            print("The account has not been updated.")
+                            loop_counter += 1
+                        else:
+                            print("Invalid input. Please try again.")
+                    else:
+                        loop_counter += 1
+            except ValueError:
+                return "Invalid account number. Please enter a valid number."
+
+        elif search_category == "3":
+            try:
+                search_amount = float(input("Please enter the amount range of the account(s) you want to update: "))
+                
+                loop_counter = 0
+                while loop_counter < len(cls.accounts):
+                    account = cls.accounts[loop_counter]
+                    if account.amount <= search_amount:
+                        print(account)
+                        answer = input("Is this the account you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
+                        if answer == "YES" or answer == "Y":
+                            print("Enter the new details for the account:")
+                            new_first_name = input("New first name: ").upper()
+                            new_last_name = input("New last name: ").upper()
+
+                            while True:
+                                try:
+                                    new_amount = float(input("New amount: "))
+                                    break
+                                except ValueError:
+                                    print("Invalid amount input. Please enter a valid number.")
+                            
+                            account.account_holder_first_name = new_first_name
+                            account.account_holder_last_name = new_last_name
+                            account.amount = new_amount
+                            
+                            updated_accounts.append(account)
+                            print("The account has been updated.")
+                        elif answer == "NO" or answer == "N":
+                            print("The account has not been updated.")
+                            loop_counter += 1
+                        else:
+                            print("Invalid input. Please try again.")
+                    else:
+                        loop_counter += 1
+            except ValueError:
+                return "Invalid amount input. Please enter a valid number."
+
+        else:
+            return "Invalid search category selected. Please choose 1, 2, or 3."
+
+        if not updated_accounts:
+            return "No accounts were updated."
+
+        return updated_accounts
+#<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
+    @classmethod
+    def transfer(cls):
+        if len(cls.accounts) == 0:
+            return "There are no accounts in the database."
+
+        else:
+            print("Enter details for the source account (from which funds will be transferred):")
+            source_account = cls._find_account()
+            if isinstance(source_account,str):
+                return source_account
+
+            else:
+                print("Enter details for the destination account (to which funds will be transferred):")
+                destination_account = cls._find_account()
+                if isinstance(source_account,str):
+                    return source_account
+                
+                else:
+                    if source_account.account_number == destination_account.account_number:
+                        return "Source and destination accounts cannot be the same."
+
+                    while True:
+                        try:
+                            transfer_amount = float(input("Enter the amount to transfer: "))
+                            if transfer_amount <= 0:
+                                print("Transfer amount must be greater than 0.")
+                            elif transfer_amount > source_account.amount:
+                                print("Insufficient funds in the source account.")
+                            else:
+                                break
+                        except ValueError:
+                            print("Invalid amount. Please enter a valid number.")
+
+                    print(f"Transferring ${transfer_amount} from account {source_account.account_number} to account {destination_account.account_number}.")
+                    confirm = input("Confirm transfer? [yes/no]: ").upper()
+                    if confirm == "YES" or confirm == "Y":
+
+                        source_account.amount -= transfer_amount
+                        destination_account.amount += transfer_amount
+                        print("Transfer successful.")
+                        print(f"Updated source account balance: ${source_account.amount}")
+                        print(f"Updated destination account balance: ${destination_account.amount}")
+
+                    elif confirm == "NO" or confirm == "N":
+                        print("Transfer canceled.")
+
+                    else:
+                        print("Invalid input. Transfer canceled.")
+
+                    return
+#<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
+    @classmethod
+    def find_account(cls):
+        if len(cls.accounts) == 0:
+            return "There are no accounts in the database."
+        else:
+            while True:
+                try:
+                    account_number = int(input("Enter the account number: "))
+                    for account in cls.accounts:
+                        if account.account_number == account_number:
+                            return account
+                    print("Account not found. Please try again.")
+                except ValueError:
+                    print("Invalid account number. Please enter a valid number.")
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
