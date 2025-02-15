@@ -1,6 +1,3 @@
-import tkinter as tk
-from tkinter import messagebox, simpledialog
-#<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
 class employees_manager:
 #class prop
     employees=[]
@@ -276,11 +273,13 @@ class employees_manager:
         return updated_employees
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def all_employee_information(cls):
-        if len(employees_manager.employees) == 0:
-            print("There are no employees in the database.")
+        if len(cls.employees) == 0:
+            return "There are no employees in the database."
         else:
+            all_employee = []
             for employee in cls.employees:
-                print(employee)
+                all_employee.append(employee)
+            return all_employee
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def __str__(self):
         return f"Employee: {self.first_name} {self.last_name} Department: {self.department} Salary: {self.salary}"
@@ -374,11 +373,13 @@ class accounts_manager:
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     @classmethod
     def all_account_information(cls):
-        if len(accounts_manager.accounts) == 0:
-            print("There are no accounts in the database.")
+        if len(cls.accounts) == 0:
+            return "There are no accounts in the database."
         else:
+            all_account_information = []
             for account in cls.accounts:
-                print(account)
+                all_account_information.append(account)
+            return all_account_information
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     @classmethod
     def delete_account(cls):
@@ -710,3 +711,110 @@ class accounts_manager:
                 except ValueError:
                     print("Invalid account number. Please enter a valid number.")
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
+while True:
+    print("\n--- Main Menu ---")
+    print("1. Manage Employees")
+    print("2. Manage Accounts")
+    print("3. Exit")
+    choice = input("Enter your choice (1/2/3): ")
+
+    if choice == "1":
+        while True:
+            print("\n--- Employee Management ---")
+            print("1. Add New Employee")
+            print("2. Search Employee")
+            print("3. Update Employee")
+            print("4. Delete Employee")
+            print("5. View All Employees")
+            print("6. Back to Main Menu")
+            emp_choice = input("Enter your choice (1/2/3/4/5/6): ")
+
+            if emp_choice == "1":
+                employees_manager.new_employee()
+            elif emp_choice == "2":
+                result = employees_manager.search_employee()
+                if isinstance(result, list):
+                    for employee in result:
+                        print(employee)
+                else:
+                    print(result)
+            elif emp_choice == "3":
+                result = employees_manager.update_employee()
+                if isinstance(result, list):
+                    for employee in result:
+                        print(employee)
+                else:
+                    print(result)
+            elif emp_choice == "4":
+                result = employees_manager.delete_employee()
+                if isinstance(result, list):
+                    for employee in result:
+                        print(employee)
+                else:
+                    print(result)
+            elif emp_choice == "5":
+                all_employee=employees_manager.all_employee_information()
+                for employee in all_employee:
+                    print(employee)
+            elif emp_choice == "6":
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+    elif choice == "2":
+        while True:
+            print("\n--- Account Management ---")
+            print("1. Add New Account")
+            print("2. Search Account")
+            print("3. Update Account")
+            print("4. Delete Account")
+            print("5. Deposit")
+            print("6. Withdraw")
+            print("7. Transfer")
+            print("8. View All Accounts")
+            print("9. Back to Main Menu")
+            acc_choice = input("Enter your choice (1/2/3/4/5/6/7/8/9): ")
+
+            if acc_choice == "1":
+                accounts_manager.new_account()
+            elif acc_choice == "2":
+                result = accounts_manager.search_account()
+                if isinstance(result, list):
+                    for account in result:
+                        print(account)
+                else:
+                    print(result)
+            elif acc_choice == "3":
+                result = accounts_manager.update_account()
+                if isinstance(result, list):
+                    for account in result:
+                        print(account)
+                else:
+                    print(result)
+            elif acc_choice == "4":
+                result = accounts_manager.delete_account()
+                if isinstance(result, list):
+                    for account in result:
+                        print(account)
+                else:
+                    print(result)
+            elif acc_choice == "5":
+                accounts_manager.deposit()
+            elif acc_choice == "6":
+                accounts_manager.withdraw()
+            elif acc_choice == "7":
+                accounts_manager.transfer()
+            elif acc_choice == "8":
+                all_account_information=accounts_manager.all_account_information()
+                for account in all_account_information:
+                    print(account)
+            elif acc_choice == "9":
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+    elif choice == "3":
+        print("Exiting the program. Goodbye!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
