@@ -272,6 +272,7 @@ class employees_manager:
 
         return updated_employees
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
+    @classmethod
     def all_employee_information(cls):
         if len(cls.employees) == 0:
             return "There are no employees in the database."
@@ -373,11 +374,11 @@ class accounts_manager:
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     @classmethod
     def all_account_information(cls):
-        if len(cls.accounts) == 0:
+        if len(accounts_manager.accounts) == 0:
             return "There are no accounts in the database."
         else:
             all_account_information = []
-            for account in cls.accounts:
+            for account in accounts_manager.accounts:
                 all_account_information.append(account)
             return all_account_information
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
@@ -753,9 +754,12 @@ while True:
                 else:
                     print(result)
             elif emp_choice == "5":
-                all_employee=employees_manager.all_employee_information()
-                for employee in all_employee:
-                    print(employee)
+                all_employee = employees_manager.all_employee_information()
+                if isinstance(all_employee, str):
+                    print(all_employee)
+                else:
+                    for employee in all_employee:
+                        print(employee)
             elif emp_choice == "6":
                 break
             else:
@@ -805,9 +809,12 @@ while True:
             elif acc_choice == "7":
                 accounts_manager.transfer()
             elif acc_choice == "8":
-                all_account_information=accounts_manager.all_account_information()
-                for account in all_account_information:
-                    print(account)
+                all_account_information = accounts_manager.all_account_information()
+                if isinstance(all_account_information, str):
+                    print(all_account_information)
+                else:
+                    print(all_account_information)
+
             elif acc_choice == "9":
                 break
             else:
