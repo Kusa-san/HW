@@ -10,10 +10,60 @@ class employees_manager:
         employees_manager.employees.append(self)
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def new_employee():
-        first_name = input("Enter the employee first name: ").upper()
-        last_name = input("Enter the employee last name: ").upper()
-        department = input("Enter employee department: ").upper()
-        salary = float(input("Enter employee salary: "))
+        numbers = "0123456789"
+
+        while True:
+            first_name = input("Enter the employee first name: ").upper()
+            has_number = False
+            for char in first_name:
+                if char in numbers:
+                    has_number = True
+                    break
+            if not has_number:
+                break
+            print("Invalid input! The first name contains numbers.")
+            choice = input("Do you want to try again? (yes/no): ").upper()
+            if choice != "YES" or choice != "Y":
+                print("Process stopped.")
+                return
+
+        while True:
+            last_name = input("Enter the employee last name: ").upper()
+            has_number = False
+            for char in last_name:
+                if char in numbers:
+                    has_number = True
+                    break
+            if not has_number:
+                break
+            print("Invalid input! The last name contains numbers.")
+            choice = input("Do you want to try again? (yes/no): ").upper()
+            if choice != "YES" or choice != "Y":
+                print("Process stopped.")
+                return
+
+        while True:
+            department = input("Enter employee department: ").upper()
+            has_number = False
+            for char in department:
+                if char in numbers:
+                    has_number = True
+                    break
+            if not has_number:
+                break
+            print("Invalid input! The department contains numbers.")
+            choice = input("Do you want to try again? (yes/no): ").upper()
+            if choice != "YES" or choice != "Y":
+                print("Process stopped.")
+                return
+
+        while True:
+            try:
+                salary = float(input("Enter employee salary: "))
+                break
+            except ValueError:
+                print("Invalid input! Salary must be a number. Please try again.")
+
         employees_manager(first_name, last_name, department, salary)
         print("The new employee has been added to the database.")
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
@@ -143,13 +193,32 @@ class employees_manager:
         if len(cls.employees) == 0:
             return "There are no employees in the database."
 
+        numbers = "0123456789"
+
+        def has_numbers(input_string):
+            for char in input_string:
+                if char in numbers:
+                    return True
+            return False
+
         updated_employees = []
         search_category = input("By what category do you want to search for the employee to update?\n1. First name and last name\n2. Department\n3. Salary\nEnter your choice (1/2/3): ")
 
         if search_category == "1":
-            update_employee_first_name = input("Please enter the first name of the employee you want to update: ").upper()
-            update_employee_last_name = input("Please enter the last name of the employee you want to update: ").upper()
-            
+            while True:
+                update_employee_first_name = input("Please enter the first name of the employee you want to update: ").upper()
+                if has_numbers(update_employee_first_name):
+                    print("Invalid input! First name cannot contain numbers. Please try again.")
+                else:
+                    break
+
+            while True:
+                update_employee_last_name = input("Please enter the last name of the employee you want to update: ").upper()
+                if has_numbers(update_employee_last_name):
+                    print("Invalid input! Last name cannot contain numbers. Please try again.")
+                else:
+                    break
+
             loop_counter = 0
             while loop_counter < len(cls.employees):
                 employee = cls.employees[loop_counter]
@@ -157,27 +226,43 @@ class employees_manager:
                     print(employee)
                     answer = input("Is this the employee you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
                     if answer == "YES" or answer == "Y":
-                        print("Enter the new details for the employee:")
-                        new_first_name = input("New first name: ").upper()
-                        new_last_name = input("New last name: ").upper()
-                        new_department = input("New department: ").upper()
-                        
+                        while True:
+                            new_first_name = input("New first name: ").upper()
+                            if has_numbers(new_first_name):
+                                print("Invalid input! First name cannot contain numbers. Please try again.")
+                            else:
+                                break
+
+                        while True:
+                            new_last_name = input("New last name: ").upper()
+                            if has_numbers(new_last_name):
+                                print("Invalid input! Last name cannot contain numbers. Please try again.")
+                            else:
+                                break
+
+                        while True:
+                            new_department = input("New department: ").upper()
+                            if has_numbers(new_department):
+                                print("Invalid input! Department cannot contain numbers. Please try again.")
+                            else:
+                                break
+
                         while True:
                             try:
                                 new_salary = float(input("New salary: "))
                                 break
                             except ValueError:
                                 print("Invalid salary input. Please enter a valid number.")
-                        
+
                         employee.first_name = new_first_name
                         employee.last_name = new_last_name
                         employee.department = new_department
                         employee.salary = new_salary
-                        
+
                         updated_employees.append(employee)
                         print("The employee has been updated.")
+                        loop_counter += 1
                     elif answer == "NO" or answer == "N":
-                        print("The employee has not been updated.")
                         loop_counter += 1
                     else:
                         print("Invalid input. Please try again.")
@@ -185,8 +270,13 @@ class employees_manager:
                     loop_counter += 1
 
         elif search_category == "2":
-            update_department = input("Please enter the department of the employee(s) you want to update: ").upper()
-            
+            while True:
+                update_department = input("Please enter the department of the employee(s) you want to update: ").upper()
+                if has_numbers(update_department):
+                    print("Invalid input! Department cannot contain numbers. Please try again.")
+                else:
+                    break
+
             loop_counter = 0
             while loop_counter < len(cls.employees):
                 employee = cls.employees[loop_counter]
@@ -194,27 +284,43 @@ class employees_manager:
                     print(employee)
                     answer = input("Is this the employee you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
                     if answer == "YES" or answer == "Y":
-                        print("Enter the new details for the employee:")
-                        new_first_name = input("New first name: ").upper()
-                        new_last_name = input("New last name: ").upper()
-                        new_department = input("New department: ").upper()
-                        
+                        while True:
+                            new_first_name = input("New first name: ").upper()
+                            if has_numbers(new_first_name):
+                                print("Invalid input! First name cannot contain numbers. Please try again.")
+                            else:
+                                break
+
+                        while True:
+                            new_last_name = input("New last name: ").upper()
+                            if has_numbers(new_last_name):
+                                print("Invalid input! Last name cannot contain numbers. Please try again.")
+                            else:
+                                break
+
+                        while True:
+                            new_department = input("New department: ").upper()
+                            if has_numbers(new_department):
+                                print("Invalid input! Department cannot contain numbers. Please try again.")
+                            else:
+                                break
+
                         while True:
                             try:
                                 new_salary = float(input("New salary: "))
                                 break
                             except ValueError:
                                 print("Invalid salary input. Please enter a valid number.")
-                        
+
                         employee.first_name = new_first_name
                         employee.last_name = new_last_name
                         employee.department = new_department
                         employee.salary = new_salary
-                        
+
                         updated_employees.append(employee)
                         print("The employee has been updated.")
+                        loop_counter += 1
                     elif answer == "NO" or answer == "N":
-                        print("The employee has not been updated.")
                         loop_counter += 1
                     else:
                         print("Invalid input. Please try again.")
@@ -228,7 +334,7 @@ class employees_manager:
                     break
                 except ValueError:
                     print("Invalid salary input. Please enter a valid number.")
-            
+
             loop_counter = 0
             while loop_counter < len(cls.employees):
                 employee = cls.employees[loop_counter]
@@ -236,28 +342,43 @@ class employees_manager:
                     print(employee)
                     answer = input("Is this the employee you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
                     if answer == "YES" or answer == "Y":
-                        print("Enter the new details for the employee:")
-                        new_first_name = input("New first name: ").upper()
-                        new_last_name = input("New last name: ").upper()
-                        new_department = input("New department: ").upper()
-                        
-                        
+                        while True:
+                            new_first_name = input("New first name: ").upper()
+                            if has_numbers(new_first_name):
+                                print("Invalid input! First name cannot contain numbers. Please try again.")
+                            else:
+                                break
+
+                        while True:
+                            new_last_name = input("New last name: ").upper()
+                            if has_numbers(new_last_name):
+                                print("Invalid input! Last name cannot contain numbers. Please try again.")
+                            else:
+                                break
+
+                        while True:
+                            new_department = input("New department: ").upper()
+                            if has_numbers(new_department):
+                                print("Invalid input! Department cannot contain numbers. Please try again.")
+                            else:
+                                break
+
                         while True:
                             try:
                                 new_salary = float(input("New salary: "))
                                 break
                             except ValueError:
                                 print("Invalid salary input. Please enter a valid number.")
-                        
+
                         employee.first_name = new_first_name
                         employee.last_name = new_last_name
                         employee.department = new_department
                         employee.salary = new_salary
-                        
+
                         updated_employees.append(employee)
                         print("The employee has been updated.")
+                        loop_counter += 1
                     elif answer == "NO" or answer == "N":
-                        print("The employee has not been updated.")
                         loop_counter += 1
                     else:
                         print("Invalid input. Please try again.")
@@ -295,7 +416,7 @@ class accounts_manager:
         self.amount = amount
         self.account_number = accounts_manager.account_number
         accounts_manager.accounts.append(self)
-        accounts_manager.accout_number += 1
+        accounts_manager.account_number += 1
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def __str__(self):
             return f"The name of the account holder is {self.account_holder_first_name} {self.account_holder_last_name} , amount is {self.amount} , and account number is {self.account_number}"
@@ -509,9 +630,33 @@ class accounts_manager:
             return matching_accounts
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     def new_account():
-        account_holder_first_name = input("Enter the first name of the account holder: ").upper()
-        account_holder_last_name = input("Enter the last name of the account holder: ").upper()
-        amount = float(input("Enter the amount: "))
+        numbers = "0123456789"
+
+        def has_numbers(input_string):
+            for char in input_string:
+                if char in numbers:
+                    return True
+            return False
+
+        while True:
+            account_holder_first_name = input("Enter the first name of the account holder: ").upper()
+            if not has_numbers(account_holder_first_name):
+                break
+            print("Invalid input! First name cannot contain numbers. Please try again.")
+
+        while True:
+            account_holder_last_name = input("Enter the last name of the account holder: ").upper()
+            if not has_numbers(account_holder_last_name):
+                break
+            print("Invalid input! Last name cannot contain numbers. Please try again.")
+
+        while True:
+            try:
+                amount = float(input("Enter the amount: "))
+                break
+            except ValueError:
+                print("Invalid input! Amount must be a number. Please try again.")
+
         accounts_manager(account_holder_first_name, account_holder_last_name, amount)
         print("The new account has been added to the database.")
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
@@ -521,7 +666,51 @@ class accounts_manager:
             return "There are no accounts in the database."
 
         updated_accounts = []
-        search_category = input("By what category do you want to search for the account to update?\n1. Account holder first name and last name\n2. Account number\n3. Amount\nEnter your choice (1 or 2 or 3): ")
+        numbers = "0123456789"
+
+        def validate_name(prompt):
+            while True:
+                name = input(prompt).upper()
+                has_number = False
+                for char in name:
+                    if char in numbers:
+                        has_number = True
+                        break
+                if not has_number:
+                    return name
+                print("Invalid input! Names cannot contain numbers. Please try again.")
+
+        def update_account_details(account):
+            print(account)
+            answer = input("Is this the account you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
+            if answer == "YES" or answer == "Y":
+                new_first_name = validate_name("New first name: ")
+                new_last_name = validate_name("New last name: ")
+                while True:
+                    try:
+                        new_amount = float(input("New amount: "))
+                        break
+                    except ValueError:
+                        print("Invalid amount input. Please enter a valid number.")
+
+                account.account_holder_first_name = new_first_name
+                account.account_holder_last_name = new_last_name
+                account.amount = new_amount
+
+                updated_accounts.append(account)
+                print("The account has been updated.")
+            elif answer == "NO" or answer == "N":
+                print("The account has not been updated.")
+            else:
+                print("Invalid input. Please try again.")
+
+        search_category = input(
+            "By what category do you want to search for the account to update?\n"
+            "1. Account holder first name and last name\n"
+            "2. Account number\n"
+            "3. Amount\n"
+            "Enter your choice (1 or 2 or 3): "
+        )
 
         if search_category == "1":
             search_first_name = input("Please enter the first name of the account holder you want to update: ").upper()
@@ -531,107 +720,32 @@ class accounts_manager:
             while loop_counter < len(cls.accounts):
                 account = cls.accounts[loop_counter]
                 if account.account_holder_first_name == search_first_name and account.account_holder_last_name == search_last_name:
-                    print(account)
-                    answer = input("Is this the account you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
-                    if answer == "YES" or answer == "Y":
-                        print("Enter the new details for the account:")
-                        new_first_name = input("New first name: ").upper()
-                        new_last_name = input("New last name: ").upper()
-                        
-                        while True:
-                            try:
-                                new_amount = float(input("New amount: "))
-                                break
-                            except ValueError:
-                                print("Invalid amount input. Please enter a valid number.")
-                        
-                        account.account_holder_first_name = new_first_name
-                        account.account_holder_last_name = new_last_name
-                        account.amount = new_amount
-                        
-                        updated_accounts.append(account)
-                        print("The account has been updated.")
-                    elif answer == "NO" or answer == "N":
-                        print("The account has not been updated.")
-                        loop_counter += 1
-                    else:
-                        print("Invalid input. Please try again.")
-                else:
-                    loop_counter += 1
+                    update_account_details(account)
+                loop_counter += 1
 
         elif search_category == "2":
             try:
                 search_account_number = int(input("Please enter the account number of the account you want to update: "))
-                
+
                 loop_counter = 0
                 while loop_counter < len(cls.accounts):
                     account = cls.accounts[loop_counter]
                     if account.account_number == search_account_number:
-                        print(account)
-                        answer = input("Is this the account you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
-                        if answer == "YES" or answer == "Y":
-                            print("Enter the new details for the account:")
-                            new_first_name = input("New first name: ").upper()
-                            new_last_name = input("New last name: ").upper()
-
-                            while True:
-                                try:
-                                    new_amount = float(input("New amount: "))
-                                    break
-                                except ValueError:
-                                    print("Invalid amount input. Please enter a valid number.")
-                            
-                            account.account_holder_first_name = new_first_name
-                            account.account_holder_last_name = new_last_name
-                            account.amount = new_amount
-                            
-                            updated_accounts.append(account)
-                            print("The account has been updated.")
-                        elif answer == "NO" or answer == "N":
-                            print("The account has not been updated.")
-                            loop_counter += 1
-                        else:
-                            print("Invalid input. Please try again.")
-                    else:
-                        loop_counter += 1
+                        update_account_details(account)
+                    loop_counter += 1
             except ValueError:
                 return "Invalid account number. Please enter a valid number."
 
         elif search_category == "3":
             try:
                 search_amount = float(input("Please enter the amount range of the account(s) you want to update: "))
-                
+
                 loop_counter = 0
                 while loop_counter < len(cls.accounts):
                     account = cls.accounts[loop_counter]
                     if account.amount <= search_amount:
-                        print(account)
-                        answer = input("Is this the account you want to update? [ Please enter { yes or no } or { y or n } ]: ").upper()
-                        if answer == "YES" or answer == "Y":
-                            print("Enter the new details for the account:")
-                            new_first_name = input("New first name: ").upper()
-                            new_last_name = input("New last name: ").upper()
-
-                            while True:
-                                try:
-                                    new_amount = float(input("New amount: "))
-                                    break
-                                except ValueError:
-                                    print("Invalid amount input. Please enter a valid number.")
-                            
-                            account.account_holder_first_name = new_first_name
-                            account.account_holder_last_name = new_last_name
-                            account.amount = new_amount
-                            
-                            updated_accounts.append(account)
-                            print("The account has been updated.")
-                        elif answer == "NO" or answer == "N":
-                            print("The account has not been updated.")
-                            loop_counter += 1
-                        else:
-                            print("Invalid input. Please try again.")
-                    else:
-                        loop_counter += 1
+                        update_account_details(account)
+                    loop_counter += 1
             except ValueError:
                 return "Invalid amount input. Please enter a valid number."
 
