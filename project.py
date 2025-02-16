@@ -12,50 +12,34 @@ class employees_manager:
     def new_employee():
         numbers = "0123456789"
 
-        while True:
-            first_name = input("Enter the employee first name: ").upper()
-            has_number = False
-            for char in first_name:
-                if char in numbers:
-                    has_number = True
-                    break
-            if not has_number:
-                break
-            print("Invalid input! The first name contains numbers.")
-            choice = input("Do you want to try again? (yes/no): ").upper()
-            if choice != "YES" or choice != "Y":
-                print("Process stopped.")
-                return
+        def validate_input(prompt):
+            """Validate that the input does not contain numbers."""
+            while True:
+                user_input = input(prompt).upper()
+                has_number = False
+                for char in user_input:
+                    if char in numbers:
+                        has_number = True
+                        break
+                if not has_number:
+                    return user_input
+                print("Invalid input! The input contains numbers.")
+                choice = input("Do you want to try again? (yes/no): ").upper()
+                if choice != "YES" and choice != "Y":
+                    print("Process stopped.")
+                    return None
 
-        while True:
-            last_name = input("Enter the employee last name: ").upper()
-            has_number = False
-            for char in last_name:
-                if char in numbers:
-                    has_number = True
-                    break
-            if not has_number:
-                break
-            print("Invalid input! The last name contains numbers.")
-            choice = input("Do you want to try again? (yes/no): ").upper()
-            if choice != "YES" or choice != "Y":
-                print("Process stopped.")
-                return
+        first_name = validate_input("Enter the employee first name: ")
+        if first_name is None:
+            return
 
-        while True:
-            department = input("Enter employee department: ").upper()
-            has_number = False
-            for char in department:
-                if char in numbers:
-                    has_number = True
-                    break
-            if not has_number:
-                break
-            print("Invalid input! The department contains numbers.")
-            choice = input("Do you want to try again? (yes/no): ").upper()
-            if choice != "YES" or choice != "Y":
-                print("Process stopped.")
-                return
+        last_name = validate_input("Enter the employee last name: ")
+        if last_name is None:
+            return
+
+        department = validate_input("Enter employee department: ")
+        if department is None:
+            return
 
         while True:
             try:
