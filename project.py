@@ -369,9 +369,6 @@ class accounts_manager:
 
                 return
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
-    def transfer():
-        pass
-#<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
     @classmethod
     def all_account_information(cls):
         if len(accounts_manager.accounts) == 0:
@@ -708,7 +705,7 @@ class accounts_manager:
                     for account in cls.accounts:
                         if account.account_number == account_number:
                             return account
-                    print("Account not found. Please try again.")
+                    return "Account not found. Please try again."
                 except ValueError:
                     print("Invalid account number. Please enter a valid number.")
 #<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>:<:>
