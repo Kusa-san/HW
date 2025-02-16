@@ -800,17 +800,26 @@ while True:
                 else:
                     print(result)
             elif acc_choice == "5":
-                accounts_manager.deposit()
+                result = accounts_manager.deposit()
+                if isinstance(result, str):
+                    print(result)
+
             elif acc_choice == "6":
-                accounts_manager.withdraw()
+                result = accounts_manager.withdraw()
+                if isinstance(result, str):
+                    print(result)
             elif acc_choice == "7":
-                accounts_manager.transfer()
+                result = accounts_manager.transfer()
+                if isinstance(result, str):
+                    print(result)
+                
             elif acc_choice == "8":
-                all_account_information = accounts_manager.all_account_information()
-                if isinstance(all_account_information, str):
-                    print(all_account_information)
-                else:
-                    print(all_account_information)
+                result = accounts_manager.all_account_information()
+                if isinstance(result, str):
+                    print(result)
+                elif isinstance(result, list):
+                    for account in result:
+                        print(account)
 
             elif acc_choice == "9":
                 break
