@@ -748,13 +748,13 @@ class accounts_manager:
 
         else:
             print("Enter details for the source account (from which funds will be transferred):")
-            source_account = cls._find_account()
+            source_account = cls.find_account()
             if isinstance(source_account,str):
                 return source_account
 
             else:
                 print("Enter details for the destination account (to which funds will be transferred):")
-                destination_account = cls._find_account()
+                destination_account = cls.find_account()
                 if isinstance(source_account,str):
                     return source_account
                 
